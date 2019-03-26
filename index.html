@@ -1,0 +1,43 @@
+<!doctype html>
+<html ng-app="todoApp">
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.22/angular.min.js"></script>
+    <script src="./app.js"></script>
+    <style>
+        .done-true {
+            text-decoration: line-through;
+            color: grey;
+        }
+
+        input:required {
+            box-shadow: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Todo</h2>
+
+    <div ng-controller="TodoListController">
+
+        <form ng-submit="addTodo()" name="form">
+            <input type="text" ng-model="todoText" size="30" placeholder="add new todo here" required>
+            <input class="btn-primary" type="submit" value="add">
+        </form>
+
+        <ul class="unstyled">
+            <li ng-repeat="todo in todos | orderBy : $index:true">
+                <button type="button" ng-click="remove()">&#10008;</button>
+                <span class="done-{{todo.done}}" ng-hide="todo.editing">{{todo.text}}</span>
+                <input type="text" ng-show="todo.editing" ng-model="todo.text">
+                <button type="submit" ng-hide="todo.editing" ng-click="change(todo); todo.editing === true">Edit</button>
+                <button type="submit" ng-show="todo.editing" ng-click="save($index); todo.editing === false">Save</button>
+                <button type="submit" ng-show="todo.editing" ng-click="cancel($index); todo.editing === false">Cancel</button>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>
